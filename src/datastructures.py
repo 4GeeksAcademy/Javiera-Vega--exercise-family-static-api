@@ -16,7 +16,22 @@ class FamilyStructure:
                 "last_name": last_name,
                 "age": 33,
                 "lucky_numbers": [7, 13, 22]
+            },
+            {
+                "id": self._generate_id(),
+                "first_name": "Jane",
+                "last_name": last_name,
+                "age": 35,
+                "lucky_numbers": [10, 14, 3]
+            },
+            {
+                "id": self._generate_id(),
+                "first_name": "Jimmy",
+                "last_name": last_name,
+                "age": 5,
+                "lucky_numbers": [1]
             }
+            
         ]
 
     # This method generates a unique incremental ID
@@ -28,17 +43,45 @@ class FamilyStructure:
     def add_member(self, member):
         ## You have to implement this method
         ## Append the member to the list of _members
-        pass
+        first_name = member.get("first_name")
+        age = member.get("age")
+        lucky_numbers = member.get("lucky_numbers")
+
+        if first_name is None or type(first_name) is not str:
+            return None
+        if age is None or type(age) is not int or age <= 0:
+            return None
+        if lucky_numbers is None or type(lucky_numbers) is not list:
+            return None 
+        
+        new_member = {
+            "id": self._generate_id(),
+            "first_name": first_name,
+            "last_name": self.last_name,
+            "age": age,
+            "lucky_numbers": lucky_numbers
+        }
+        self._members.append(new_member)
+        return new_member
 
     def delete_member(self, id):
         ## You have to implement this method
         ## Loop the list and delete the member with the given id
-        pass
+        array_length = len(self._members)
+        self._members = list(filter(lambda item : item["id"] != id, self._members))
+        if len(self._members) < array_length:
+            return True
+        else:
+            return False
 
     def get_member(self, id):
         ## You have to implement this method
         ## Loop all the members and return the one with the given id
-        pass
+        member = list(filter(lambda item : item["id"] == id, self._members))
+        if member:
+            return member[0]
+        else:
+            return None
 
     # This method is done, it returns a list with all the family members
     def get_all_members(self):
